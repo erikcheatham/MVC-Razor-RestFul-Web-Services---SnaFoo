@@ -1,0 +1,68 @@
+﻿@model SnaFoo.Models.SuggestionsViewModel
+
+@{
+    ViewBag.Title = "Suggestions";
+}
+
+<div class="shelf shelf_5">
+    <h2 class="hdg hdg_1">Suggestions</h2>
+</div>
+<div class="shelf shelf_2">
+    <div class="error isHidden">
+        You have attempted to add more than the allowed number of suggestions per month!
+        <br />There is a total of three allowed suggestions per month.
+    </div>
+    <div class="error isHidden">You have attempted to add a suggestion that already exists!</div>
+    <div class="error isHidden">You have not completed information requested.</div>
+</div>
+<div class="content-centered">
+    <div class="shelf shelf_2">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @*@Html.ValidationSummary(true,
+                message: "There Was An Error Below",
+                htmlAttributes: new { @class = "text-danger" })*@
+
+            <fieldset class="shelf shelf_2">
+                <div class="shelf shelf_2">
+                    <div class="shelf">
+                        @Html.Label("snackOptions",
+                       labelText: "Select A Snack From The List",
+                       htmlAttributes: new { @class = "hdg hdg_2" })
+                    </div>
+                    @Html.DropDownList("alreadySuggestedList", new SelectList(Model.OnlineSuggestedSnackList, "name", "name"))
+                    @*@Html.DropDownListFor(model => model.SnackName, new SelectList(Model.sugList, "SnackName", "SnackName"))*@
+                    @*@Html.ValidationMessageFor(model => model.SnackId, "Incorrect Choice", new { @class = "text-danger" })*@
+                </div>
+            </fieldset>
+                <div class="shelf shelf_5">
+                    <p class="hdg hdg_1">or</p>
+                </div>
+                <fieldset class="shelf shelf_5">
+                    <div class="shelf">
+                        @Html.Label("suggestionInput",
+                       labelText: "Enter new snack suggestion & purchasing location",
+                       htmlAttributes: new { @class = "hdg hdg_2" })
+                    </div>
+                    <div class="shelf">
+                        @*<input type="text" id="suggestionInput" placeholder="Snack Suggestion" />*@
+                        @Html.TextBoxFor(model => model.SnackName, new { @placeholder = "Snack Suggestion" })
+                        @*@Html.ValidationMessageFor(model => model.SuggestionText, "Your Suggestion Was Incorrect", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="shelf">
+                        @*<label for="suggestionLocation" class="isHidden">Location</label>*@
+                        @Html.Label("suggestionLocation",
+                           labelText: "Location",
+                           htmlAttributes: new { @class = "isHidden" })
+                        @*<input type="text" id="suggestionLocation" placeholder="Location" class="" />*@
+                        @Html.TextBoxFor(model => model.SuggestionLocation, new { @placeholder = "Location" })
+                        @*@Html.ValidationMessageFor(model => model.SuggestionLocation, "Your Location Was Incorrect", new { @class = "text-danger" })*@
+                    </div>
+                </fieldset>
+                <input type="submit" value="Suggest this Snack!" class="btn">
+        }
+    </div>
+</div>
